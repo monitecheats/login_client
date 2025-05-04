@@ -1,0 +1,8 @@
+aiohttp
+ujson
+pycryptodome
+eventlet
+flask
+flask-socketio
+python-dotenv
+jsonlines
