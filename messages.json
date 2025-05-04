@@ -1,0 +1,494 @@
+[
+    {
+        "participants": [
+            "mikeadm",
+            "matheus08b"
+        ],
+        "messages": [
+            {
+                "sender": "mikeadm",
+                "text": "oi",
+                "timestamp": "2025-05-01 08:43:34",
+                "read": true
+            },
+            {
+                "sender": "mikeadm",
+                "text": "teste",
+                "timestamp": "2025-05-01 08:48:19",
+                "read": true
+            },
+            {
+                "sender": "mikeadm",
+                "text": "oioi",
+                "timestamp": "2025-05-01 08:48:29",
+                "read": true
+            },
+            {
+                "sender": "matheus08b",
+                "text": "oioi",
+                "timestamp": "2025-05-01 08:49:19",
+                "read": true
+            },
+            {
+                "sender": "matheus08b",
+                "text": "teste teste",
+                "timestamp": "2025-05-01 08:49:26",
+                "read": true
+            },
+            {
+                "sender": "mikeadm",
+                "text": "oi",
+                "timestamp": "2025-05-01 08:52:12",
+                "read": true
+            },
+            {
+                "sender": "matheus08b",
+                "text": "vi",
+                "timestamp": "2025-05-01 08:52:31",
+                "read": true
+            },
+            {
+                "sender": "matheus08b",
+                "text": "teste",
+                "timestamp": "2025-05-01 08:57:03",
+                "read": true
+            },
+            {
+                "sender": "mikeadm",
+                "text": "oi",
+                "timestamp": "2025-05-01 09:19:50",
+                "read": true
+            },
+            {
+                "sender": "mikeadm",
+                "text": "oi",
+                "timestamp": "2025-05-01 09:22:01",
+                "read": true
+            },
+            {
+                "sender": "mikeadm",
+                "text": "teste\r\n",
+                "timestamp": "2025-05-01 09:22:40",
+                "read": true
+            },
+            {
+                "sender": "mikeadm",
+                "text": "oioi",
+                "timestamp": "2025-05-01 09:22:44",
+                "read": true
+            },
+            {
+                "sender": "matheus08b",
+                "text": "oi\r\n",
+                "timestamp": "2025-05-01 09:23:40",
+                "read": true
+            },
+            {
+                "sender": "matheus08b",
+                "text": "oi",
+                "timestamp": "2025-05-01 09:23:43",
+                "read": true
+            },
+            {
+                "sender": "matheus08b",
+                "text": "oi\r\n",
+                "timestamp": "2025-05-01 09:26:03",
+                "read": true
+            },
+            {
+                "sender": "mikeadm",
+                "text": "oi\r\n",
+                "timestamp": "2025-05-01 09:26:19",
+                "read": true
+            },
+            {
+                "sender": "matheus08b",
+                "text": "oi",
+                "timestamp": "2025-05-01 09:32:45",
+                "read": true
+            },
+            {
+                "sender": "matheus08b",
+                "text": "oi",
+                "timestamp": "2025-05-01 09:33:34",
+                "read": true
+            },
+            {
+                "sender": "matheus08b",
+                "text": "kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk",
+                "timestamp": "2025-05-01 09:40:13",
+                "read": true
+            },
+            {
+                "sender": "mikeadm",
+                "text": "teste",
+                "timestamp": "2025-05-01 09:50:40",
+                "read": true
+            },
+            {
+                "sender": "matheus08b",
+                "text": "~teste",
+                "timestamp": "2025-05-01 09:50:41",
+                "read": true
+            },
+            {
+                "sender": "matheus08b",
+                "text": "teste\r\n",
+                "timestamp": "2025-05-01 09:54:52",
+                "read": true
+            },
+            {
+                "sender": "matheus08b",
+                "text": "teste",
+                "timestamp": "2025-05-01 09:56:10",
+                "read": true
+            },
+            {
+                "sender": "matheus08b",
+                "text": "oi",
+                "timestamp": "2025-05-01 09:57:30",
+                "read": true
+            },
+            {
+                "sender": "matheus08b",
+                "text": "asas",
+                "timestamp": "2025-05-01 09:58:39",
+                "read": true
+            },
+            {
+                "sender": "matheus08b",
+                "text": "asas",
+                "timestamp": "2025-05-01 09:58:43",
+                "read": true
+            },
+            {
+                "sender": "mikeadm",
+                "text": "asd~\r\n",
+                "timestamp": "2025-05-01 09:58:55",
+                "read": true
+            },
+            {
+                "sender": "mikeadm",
+                "text": "asd",
+                "timestamp": "2025-05-01 09:59:00",
+                "read": true
+            },
+            {
+                "sender": "matheus08b",
+                "text": "asd",
+                "timestamp": "2025-05-01 09:59:02",
+                "read": true
+            },
+            {
+                "sender": "mikeadm",
+                "text": "ad",
+                "timestamp": "2025-05-01 09:59:06",
+                "read": true
+            },
+            {
+                "sender": "mikeadm",
+                "text": "adad",
+                "timestamp": "2025-05-01 09:59:11",
+                "read": true
+            },
+            {
+                "sender": "mikeadm",
+                "text": "teste",
+                "timestamp": "2025-05-01 10:11:20",
+                "read": true
+            },
+            {
+                "sender": "matheus08b",
+                "text": "oioi",
+                "timestamp": "2025-05-01 10:11:31",
+                "read": true
+            },
+            {
+                "sender": "mikeadm",
+                "text": "oi",
+                "timestamp": "2025-05-01 10:14:15",
+                "read": true
+            },
+            {
+                "sender": "matheus08b",
+                "text": "caramba pior que funciona",
+                "timestamp": "2025-05-01 10:14:31",
+                "read": true
+            },
+            {
+                "sender": "mikeadm",
+                "text": "sim sim",
+                "timestamp": "2025-05-01 10:14:38",
+                "read": true
+            },
+            {
+                "sender": "matheus08b",
+                "text": "oi",
+                "timestamp": "2025-05-01 10:15:25",
+                "read": true
+            },
+            {
+                "sender": "mikeadm",
+                "text": "oi",
+                "timestamp": "2025-05-01 10:15:30",
+                "read": true
+            },
+            {
+                "sender": "mikeadm",
+                "text": "teste",
+                "timestamp": "2025-05-01 10:18:33",
+                "read": true
+            },
+            {
+                "sender": "mikeadm",
+                "text": "oioi",
+                "timestamp": "2025-05-01 10:18:36",
+                "read": true
+            },
+            {
+                "sender": "matheus08b",
+                "text": "porra ficou mesmo perfeito serio",
+                "timestamp": "2025-05-01 10:18:48",
+                "read": true
+            },
+            {
+                "sender": "mikeadm",
+                "text": "oi",
+                "timestamp": "2025-05-01 10:20:24",
+                "read": true
+            },
+            {
+                "sender": "matheus08b",
+                "text": "agora sim",
+                "timestamp": "2025-05-01 10:20:30",
+                "read": true
+            },
+            {
+                "sender": "matheus08b",
+                "text": "oi",
+                "timestamp": "2025-05-01 10:21:12",
+                "read": true
+            },
+            {
+                "sender": "mikeadm",
+                "text": "funfun",
+                "timestamp": "2025-05-01 10:21:17",
+                "read": true
+            },
+            {
+                "sender": "matheus08b",
+                "text": "oi",
+                "timestamp": "2025-05-01 10:22:38",
+                "read": true
+            },
+            {
+                "sender": "matheus08b",
+                "text": "oi",
+                "timestamp": "2025-05-01 10:22:47",
+                "read": true
+            },
+            {
+                "sender": "mikeadm",
+                "text": "oi",
+                "timestamp": "2025-05-01 10:22:51",
+                "read": true
+            },
+            {
+                "sender": "mikeadm",
+                "text": "oi",
+                "timestamp": "2025-05-01 10:22:56",
+                "read": true
+            },
+            {
+                "sender": "mikeadm",
+                "text": "oi",
+                "timestamp": "2025-05-01 10:24:30",
+                "read": true
+            },
+            {
+                "sender": "mikeadm",
+                "text": "oi",
+                "timestamp": "2025-05-01 10:24:33",
+                "read": true
+            },
+            {
+                "sender": "matheus08b",
+                "text": "oi",
+                "timestamp": "2025-05-01 10:25:53",
+                "read": true
+            },
+            {
+                "sender": "matheus08b",
+                "text": "oi",
+                "timestamp": "2025-05-01 10:25:59",
+                "read": true
+            },
+            {
+                "sender": "mikeadm",
+                "text": "oi",
+                "timestamp": "2025-05-01 10:26:04",
+                "read": true
+            },
+            {
+                "sender": "matheus08b",
+                "text": "oi",
+                "timestamp": "2025-05-01 10:26:08",
+                "read": true
+            },
+            {
+                "sender": "mikeadm",
+                "text": "oi",
+                "timestamp": "2025-05-01 10:27:45",
+                "read": true
+            },
+            {
+                "sender": "mikeadm",
+                "text": "oi",
+                "timestamp": "2025-05-01 10:27:48",
+                "read": true
+            },
+            {
+                "sender": "mikeadm",
+                "text": "oi",
+                "timestamp": "2025-05-01 10:27:51",
+                "read": true
+            },
+            {
+                "sender": "matheus08b",
+                "text": "oi",
+                "timestamp": "2025-05-01 10:27:57",
+                "read": true
+            },
+            {
+                "sender": "matheus08b",
+                "text": "oi",
+                "timestamp": "2025-05-01 10:27:59",
+                "read": true
+            },
+            {
+                "sender": "mikeadm",
+                "text": "oi",
+                "timestamp": "2025-05-01 10:29:46",
+                "read": true
+            },
+            {
+                "sender": "mikeadm",
+                "text": "oi",
+                "timestamp": "2025-05-01 10:29:50",
+                "read": true
+            },
+            {
+                "sender": "mikeadm",
+                "text": "oi",
+                "timestamp": "2025-05-01 10:29:52",
+                "read": true
+            },
+            {
+                "sender": "matheus08b",
+                "text": "oi",
+                "timestamp": "2025-05-01 10:29:59",
+                "read": true
+            },
+            {
+                "sender": "matheus08b",
+                "text": "oi",
+                "timestamp": "2025-05-01 10:30:05",
+                "read": true
+            },
+            {
+                "sender": "mikeadm",
+                "text": "oi",
+                "timestamp": "2025-05-01 10:54:38",
+                "read": true
+            },
+            {
+                "sender": "matheus08b",
+                "text": "certo",
+                "timestamp": "2025-05-01 10:54:50",
+                "read": true
+            },
+            {
+                "sender": "mikeadm",
+                "text": "oi",
+                "timestamp": "2025-05-01 21:57:45",
+                "read": true
+            },
+            {
+                "sender": "matheus08b",
+                "text": "oi",
+                "timestamp": "2025-05-01 22:29:58",
+                "read": true
+            },
+            {
+                "sender": "mikeadm",
+                "text": "oi",
+                "timestamp": "2025-05-02 00:51:06"
+            },
+            {
+                "sender": "mikeadm",
+                "text": "oi",
+                "timestamp": "2025-05-02 00:51:16"
+            }
+        ],
+        "arquivados": [],
+        "ocultos": []
+    },
+    {
+        "participants": [
+            "mikeadm",
+            "teste"
+        ],
+        "messages": [
+            {
+                "sender": "mikeadm",
+                "text": "oi",
+                "timestamp": "2025-05-02 00:51:49",
+                "read": true
+            },
+            {
+                "sender": "teste",
+                "text": "oi",
+                "timestamp": "2025-05-02 00:51:58",
+                "read": true
+            },
+            {
+                "sender": "teste",
+                "text": "oi",
+                "timestamp": "2025-05-02 00:59:48",
+                "read": true
+            },
+            {
+                "sender": "mikeadm",
+                "text": "oi tudo bem? em que posso ajudar?",
+                "timestamp": "2025-05-02 01:00:03",
+                "read": true
+            },
+            {
+                "sender": "teste",
+                "text": "oi, preciso resetar minha key por favor",
+                "timestamp": "2025-05-02 01:00:16",
+                "read": true
+            },
+            {
+                "sender": "mikeadm",
+                "text": "qual sua key?",
+                "timestamp": "2025-05-02 01:00:22",
+                "read": true
+            },
+            {
+                "sender": "teste",
+                "text": "minha key:",
+                "timestamp": "2025-05-02 01:00:29",
+                "read": true
+            },
+            {
+                "sender": "mikeadm",
+                "text": "ok, resetada.",
+                "timestamp": "2025-05-02 01:00:35",
+                "read": true
+            }
+        ],
+        "ocultos": [],
+        "arquivados": []
+    }
+]

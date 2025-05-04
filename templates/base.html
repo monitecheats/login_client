@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Painel do Revendedor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='forum.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(0,0,0,0.6);
+            z-index: 999;
+        }
+
+        .modal {
+            background: #fff;
+            width: 350px;
+            padding: 20px;
+            border-radius: 6px;
+            box-shadow: 0 2px 10px #000;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 13px;
+        }
+
+        .modal h3 {
+            margin-top: 0;
+            font-size: 16px;
+            color: #002244;
+        }
+
+        .modal input[type="file"] {
+            width: 100%;
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+
+        .modal button {
+            padding: 5px 10px;
+            font-size: 13px;
+            cursor: pointer;
+            margin-right: 8px;
+        }
+
+        .modal .btn-save {
+            background-color: #337ab7;
+            color: white;
+            border: 1px solid #2e6da4;
+        }
+
+        .modal .btn-cancel {
+            background-color: #ddd;
+            border: 1px solid #999;
+        }
+
+        .modal .btn-save:hover {
+            background-color: #286090;
+        }
+
+        .modal .btn-cancel:hover {
+            background-color: #ccc;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="header-inner" style="position: relative;">
+            <div class="header-title">Painel Revendedor - Sistema de Keys</div>
+            {% if reseller_profile %}
+            <div class="header-user" onclick="toggleProfilePopup()" style="cursor: pointer; position: relative;">
+                <img src="{{ url_for('static', filename=reseller_profile) }}" alt="Foto de perfil" class="profile-pic">
+                <span class="profile-name">{{ reseller_name }}</span>
+    
+                <!-- POPUP FLUTUANTE -->
+                <div id="profile-popup" class="popup-menu" style="top: 35px; right: 0;">
+                    <button type="button" onclick="closePopupThenOpenModal(event)">Alterar imagem</button>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <!-- MODAL CENTRAL -->
+    <div id="modal-overlay" class="modal-overlay" onclick="closeModal(event)">
+        <div class="modal" onclick="event.stopPropagation()">
+            <h3>Alterar Foto de Perfil</h3>
+            <form method="POST" action="{{ url_for('update_profile_picture') }}" enctype="multipart/form-data">
+                <input type="file" name="profile_picture" accept="image/*" required>
+                <div style="text-align: right;">
+                    <button type="submit" class="btn-save">Salvar</button>
+                    <button type="button" class="btn-cancel" onclick="closeModal()">Fechar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- CONTEÚDO -->
+    <div class="layout-container">
+        <div class="sidebar">
+            <div class="sidebar-title">{{ greeting }}, <strong>{{ reseller_name }}</strong></div>
+            <ul>
+                {% if session.get('username') %}
+                    <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                    <li><a href="{{ url_for('generate_key') }}">Gerar Key</a></li>
+                    <li><a href="{{ url_for('view_keys') }}">Ver Keys</a></li>
+                  <!--  <li><a href="{{ url_for('messages') }}">Mensagens</a></li> PARA ATUALIZACAO -->
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    
+        <div class="main-content">
+            {% block content %}{% endblock %}
+        </div>
+    </div>    
+
+    <!-- JS -->
+    <script>
+        function closePopupThenOpenModal(event) {
+    event.stopPropagation(); // impede que o clique feche e reabra imediatamente
+    document.getElementById("profile-popup").style.display = "none";
+    document.getElementById("modal-overlay").style.display = "flex";
+}
+
+document.addEventListener('click', function (e) {
+    const popup = document.getElementById("profile-popup");
+    if (popup && !popup.contains(e.target) && !e.target.closest('.header-user')) {
+        popup.style.display = 'none';
+    }
+});
+
+
+        function toggleProfilePopup() {
+            const popup = document.getElementById("profile-popup");
+            popup.style.display = popup.style.display === "block" ? "none" : "block";
+        }
+        
+        function openModal() {
+    document.getElementById("profile-popup").style.display = "none"; // fecha o popup
+
+    // espera 1 milissegundo para garantir que o popup seja fechado
+    setTimeout(() => {
+        document.getElementById("modal-overlay").style.display = "flex"; // abre o modal
+    }, 1);
+}
+        
+        function closeModal(event) {
+            if (event) event.stopPropagation();
+            document.getElementById("modal-overlay").style.display = "none";
+        }
+        
+        </script>        
+
+</body>
+</html>

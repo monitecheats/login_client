@@ -1,0 +1,7 @@
+tunnel: cb75394b-e51c-41cf-9dce-ad0a555fe7d6
+credentials-file: cb75394b-e51c-41cf-9dce-ad0a555fe7d6.json
+
+ingress:
+  - hostname: client.mikeregedit.xyz
+    service: "http://localhost:7713"
+  - service: "http_status:404"

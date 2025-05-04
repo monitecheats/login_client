@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="box-title">Mensagens</div>
+
+<form id="form-acoes" method="POST" action="{{ url_for('acoes_chat') }}">
+
+    <!-- Barra de ações -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin: 10px 0;">
+        <div style="display: flex; gap: 10px;">
+            <button class="retro-button" type="button" onclick="abrirRetroModal()">Nova Mensagem</button>
+            <a href="{{ url_for('arquivadas') }}" class="retro-button" style="text-decoration: none;">Arquivadas</a>
+            <div id="botoes-acoes" style="display: none; position: relative;">
+                <button type="button" class="retro-button" onclick="toggleAcoesPopup()">Ações ▼</button>
+                <div id="popup-acoes" class="acoes-popup" style="position: absolute; top: 100%; left: 0; background: white; border: 1px solid #ccc; padding: 8px; display: none; z-index: 100;">
+                   <button type="button" onclick="confirmarAcao('arquivar')">Arquivar</button><br>
+                   <!-- <button type="button" onclick="confirmarAcao('ocultar')">Excluir</button> -->
+                </div>
+            </div>
+        </div>
+        <input type="text" class="retro-search" placeholder="Pesquisar...">
+    </div>
+
+    <input type="hidden" name="acao" id="input-acao">
+
+    {% if conversas %}
+    <ul class="retro-mensagem-lista">
+        {% for c in conversas %}
+        <li style="margin-bottom: 10px; position: relative;">
+            <label style="display: flex; align-items: center;">
+                <input type="checkbox" name="selecionados" value="{{ c.com }}" class="check-conversa" style="margin-right: 10px;">
+                
+                <img src="{{ c.profile }}" style="width: 28px; height: 28px; border-radius: 50%; object-fit: cover; margin-right: 8px;">
+                
+                <a href="{{ url_for('chat', username=c.com) }}" style="text-decoration: none; color: inherit;">
+                    <strong>{{ c.com }}</strong>
+                    {% if c.nao_lidas > 0 %}
+                        <span style="display: inline-block; width: 10px; height: 10px; background: red; border-radius: 50%; margin-left: 8px; vertical-align: middle;"></span>
+                    {% endif %}
+                    <br>
+                    <small>{{ c.quando }} — {{ c.ultima_msg }}</small>
+                </a>
+            </label>            
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <div style="text-align: center; color: #555; font-style: italic;">Você ainda não tem nenhuma mensagem.</div>
+    {% endif %}
+</form>
+
+<!-- Modal de Nova Mensagem -->
+<div id="retro-mensagem-overlay" class="modal-overlay" onclick="fecharRetroModal(event)">
+    <div class="retro-modal" onclick="event.stopPropagation()">
+        <h3 class="retro-modal-title">Nova Mensagem</h3>
+
+        <form method="POST" action="{{ url_for('enviar_mensagem') }}" class="retro-modal-form">
+            <label for="usuario">Para:</label>
+            <div style="position: relative;">
+                <input type="text" id="usuario" name="usuario" placeholder="Buscar usuário..." required class="retro-search" autocomplete="off" style="width: 100%;">
+                <ul id="resultado-usuarios" class="autocomplete-list" style="display: none;"></ul>
+            </div>
+
+            <label for="mensagem" style="margin-top: 10px;">Mensagem:</label>
+            <textarea id="mensagem" name="mensagem" rows="4" style="
+                width: 100%;
+                border: 1px solid #999;
+                border-radius: 3px;
+                font-family: Tahoma, sans-serif;
+                font-size: 13px;
+                padding: 6px;
+                resize: vertical;
+                max-height: 200px;
+            "></textarea>
+
+            <div style="margin-top: 10px; display: flex; justify-content: flex-end; gap: 8px;">
+                <button type="submit" class="retro-button">Enviar</button>
+                <button type="button" class="retro-button btn-cancel" onclick="fecharRetroModal()">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+.popup-menu button {
+    background: none;
+    border: none;
+    color: #333;
+    cursor: pointer;
+    padding: 5px 10px;
+    width: 100%;
+    text-align: left;
+}
+
+.popup-menu button:hover {
+    background-color: #f0f0f0;
+}
+</style>
+
+<script>
+const inputUsuario = document.getElementById('usuario');
+const listaResultados = document.getElementById('resultado-usuarios');
+
+inputUsuario.addEventListener('input', async () => {
+    const query = inputUsuario.value.trim();
+    if (query.length < 2) {
+        listaResultados.innerHTML = '';
+        listaResultados.style.display = 'none';
+        return;
+    }
+
+    const response = await fetch(`/buscar_usuarios?q=${encodeURIComponent(query)}`);
+    const usuarios = await response.json();
+
+    listaResultados.innerHTML = '';
+    if (usuarios.length > 0) {
+        listaResultados.style.display = 'block';
+        usuarios.forEach(user => {
+            const item = document.createElement('li');
+            item.innerHTML = `
+                <img src="/static/${user.profile}" style="width: 24px; height: 24px; border-radius: 50%; object-fit: cover; margin-right: 8px;">
+                <span>${user.name}</span>
+            `;
+            item.style.display = 'flex';
+            item.style.alignItems = 'center';
+            item.style.padding = '6px 10px';
+            item.style.cursor = 'pointer';
+            item.style.borderBottom = '1px solid #eee';
+            item.onmouseover = () => item.style.background = '#f0f0f0';
+            item.onmouseout = () => item.style.background = '';
+            item.onclick = () => {
+                inputUsuario.value = user.name;
+                listaResultados.innerHTML = '';
+                listaResultados.style.display = 'none';
+            };
+            listaResultados.appendChild(item);
+        });
+    } else {
+        listaResultados.style.display = 'none';
+    }
+});
+
+function abrirRetroModal() {
+    document.getElementById("retro-mensagem-overlay").style.display = "flex";
+}
+
+function fecharRetroModal(event) {
+    if (event) event.stopPropagation();
+    const modal = document.getElementById("retro-mensagem-overlay");
+    modal.style.display = "none";
+    modal.querySelector("#usuario").value = '';
+    const msg = modal.querySelector("#mensagem");
+    msg.value = '';
+    msg.style.height = '';
+    document.getElementById("resultado-usuarios").innerHTML = '';
+    document.getElementById("resultado-usuarios").style.display = 'none';
+}
+
+document.querySelectorAll('.check-conversa').forEach(el => {
+    el.addEventListener('change', () => {
+        const algumMarcado = [...document.querySelectorAll('.check-conversa')].some(e => e.checked);
+        document.getElementById('botoes-acoes').style.display = algumMarcado ? 'block' : 'none';
+        document.getElementById('popup-acoes').style.display = 'none';
+    });
+});
+
+function toggleAcoesPopup() {
+    const popup = document.getElementById("popup-acoes");
+    popup.style.display = (popup.style.display === "block") ? "none" : "block";
+}
+
+function confirmarAcao(acao) {
+    let msg = "";
+    if (acao === "arquivar") msg = "Deseja arquivar as conversas selecionadas?";
+    if (acao === "ocultar") msg = "Deseja excluir (ocultar) as conversas selecionadas?";
+
+    if (confirm(msg)) {
+        document.getElementById("input-acao").value = acao;
+        document.getElementById("form-acoes").submit();
+    }
+}
+</script>
+{% endblock %}

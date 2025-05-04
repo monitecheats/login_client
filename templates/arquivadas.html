@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="box-title" style="display: flex; align-items: center; gap: 12px;">
+    <a href="{{ url_for('messages') }}" style="color: white; text-decoration: none;">
+        <i class="fas fa-arrow-left"></i>
+    </a>
+    <span>Arquivadas</span>
+</div>
+
+<form method="POST" action="{{ url_for('acoes_chat') }}">
+    <!-- Campo de busca ocupando toda a largura da área útil -->
+    <input type="text" class="retro-search" placeholder="Pesquisar..." style="margin: 10px 0; width: 100%; box-sizing: border-box;">
+
+    {% if arquivadas %}
+    <ul class="retro-mensagem-lista">
+        {% for a in arquivadas %}
+        <li style="margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <strong>{{ a.com }}</strong>
+                {% if a.nao_lidas > 0 %}
+                    <span style="display: inline-block; width: 10px; height: 10px; background: red; border-radius: 50%; margin-left: 8px; vertical-align: middle;"></span>
+                {% endif %}
+                <br>
+                <small>{{ a.quando }} — {{ a.ultima_msg }}</small>
+            </div>
+            <button type="submit" class="retro-button btn-cancel" name="selecionados" value="{{ a.com }}" formaction="{{ url_for('acoes_chat') }}" formmethod="post" onclick="event.stopPropagation();">
+                <input type="hidden" name="acao" value="desarquivar">
+                Desarquivar
+            </button>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p style="text-align: center; color: #555; font-style: italic;">Nenhuma conversa arquivada.</p>
+    {% endif %}    
+</form>
+{% endblock %}

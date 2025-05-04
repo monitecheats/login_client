@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="box-title">Dashboard</div>
+<div class="box-content">
+    <table class="table-box">
+        <tr>
+            <th>Métrica</th>
+            <th>Total</th>
+            <th>Android</th>
+            <th>iPhone</th>
+        </tr>
+        <tr>
+            <td>Total de Keys Criadas</td>
+            <td>{{ total_keys }}</td>
+            <td>{{ android_total }}</td>
+            <td>{{ iphone_total }}</td>
+        </tr>
+        <tr>
+            <td>Keys Ativas</td>
+            <td>{{ keys_active }}</td>
+            <td>{{ active_android }}</td>
+            <td>{{ active_iphone }}</td>
+        </tr>
+        <tr>
+            <td>Keys Pendentes</td>
+            <td>{{ keys_pending }}</td>
+            <td>{{ pending_android }}</td>
+            <td>{{ pending_iphone }}</td>
+        </tr>        
+        <tr>
+            <td>Keys Expiradas</td>
+            <td>{{ keys_expired }}</td>
+            <td>{{ expired_android }}</td>
+            <td>{{ expired_iphone }}</td>
+        </tr>
+    </table>
+
+</div>
+{% endblock %}

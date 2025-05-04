@@ -1,0 +1,80 @@
+{
+    "matheus08b-7d-bp1lcutl8d": {
+        "android_id": "7d8f7ed66124dff9",
+        "expires_at": 1746669179,
+        "created_at": 1746064379,
+        "generated_by": "matheus08b",
+        "game": "Blood Strike"
+    },
+    "mikeios-1h-65ub9kgciy": {
+        "android_id": null,
+        "iphone_id": null,
+        "device": "android",
+        "expires_at": 1746100462,
+        "created_at": 1746096862,
+        "generated_by": "mikeadm",
+        "game": "Blood Strike",
+        "game_uid": "00001"
+    },
+    "mikeios-30d-r8kluw9ylt": {
+        "android_id": "525dc5a1aabdbfd3",
+        "iphone_id": null,
+        "device": "android",
+        "expires_at": 1748720757,
+        "created_at": 1746128757,
+        "generated_by": "mikeadm",
+        "game": "Blood Strike",
+        "game_uid": "00001"
+    },
+    "mikeios-1h-cnvm4z4gbg": {
+        "android_id": "525dc5a1aabdbfd3",
+        "iphone_id": null,
+        "device": "android",
+        "expires_at": 1746138468,
+        "created_at": 1746134868,
+        "generated_by": "mikeadm",
+        "game": "Blood Strike",
+        "game_uid": "00001"
+    },
+    "mikeios-30d-vl3dvup1u9": {
+        "android_id": "68435fec6a91e361",
+        "iphone_id": null,
+        "device": "android",
+        "expires_at": 1748999771,
+        "created_at": 1746141371,
+        "generated_by": "mikeadm",
+        "game": "Blood Strike",
+        "game_uid": "00001"
+    },
+    "mikeios-30d-kh3rb02bqe": {
+        "android_id": null,
+        "iphone_id": null,
+        "device": "android",
+        "expires_at": 1748812709,
+        "created_at": 1746220709,
+        "generated_by": "mikeadm",
+        "game": "Blood Strike",
+        "game_uid": "00001"
+    },
+    "mikeios-1h-zpvcb93mt9": {
+        "android_id": null,
+        "iphone_id": null,
+        "device": "android",
+        "expires_at": 1746278723,
+        "created_at": 1746275123,
+        "generated_by": "mikeadm",
+        "game": "Blood Strike",
+        "game_uid": "00001"
+    },
+    "mikeios-1h-9nz1fkel1a": {
+        "android_id": null,
+        "iphone_id": null,
+        "device": "android",
+        "expires_at": "pending",
+        "duration": "1h",
+        "created_at": 1746350876,
+        "generated_by": "mikeadm",
+        "game": "Blood Strike",
+        "game_uid": "00001"
+    }
+}

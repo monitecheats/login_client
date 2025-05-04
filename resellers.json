@@ -1,0 +1,21 @@
+{
+    "mikeadm": {
+        "password": "211219",
+        "credits": 34,
+        "name": "MIKE IOS",
+        "profile": "avatars/mikeadm_92db1eeb.png",
+        "role": "admin"
+    },
+    "matheus08b": {
+        "password": "1",
+        "credits": 96,
+        "name": "MATHEUS 08B",
+        "role": "admin"
+    },
+    "teste": {
+        "password": "1",
+        "credits": 9,
+        "name": "teste",
+        "role": "admin"
+    }
+}

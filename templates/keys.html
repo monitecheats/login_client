@@ -1,0 +1,346 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="box-title">Suas Chaves</div>
+<div class="box-content">
+
+  <!-- Filtro + Busca + Botão Ações -->
+  <form method="get" action="/view_keys" id="sort-form" style="display: flex; justify-content: space-between; align-items: center; gap: 16px;">
+    <!-- Grupo Busca + Ordenação -->
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <label for="search">Pesquisar:</label>
+      <input
+        type="search"
+        id="search"
+        name="search"
+        value="{{ current_search or '' }}"
+        placeholder="Digite para filtrar..."
+        style="padding: 4px 8px; border: 1px solid #ccc; border-radius: 4px;"
+      >
+
+      <label for="sort">Ordenar por:</label>
+      <select name="sort" id="sort" onchange="this.form.submit()" style="padding: 4px 8px; border: 1px solid #ccc; border-radius: 4px;">
+        <option value="recent" {% if current_sort == 'recent' %}selected{% endif %}>Mais recentes</option>
+        <option value="oldest" {% if current_sort == 'oldest' %}selected{% endif %}>Mais antigas</option>
+      </select>
+    </div>
+
+    <!-- Barra de Ações (desabilitada até selecionar pelo menos 1) -->
+    <div id="actions-bar" style="position: relative; display: none;">
+      <button type="button" class="action-btn" onclick="toggleActionsPopup()">
+        Ações ▼ <span id="count" style="font-weight: bold;"></span>
+      </button>
+
+      <!-- Popup de Ações -->
+      <div id="actions-popup" class="popup-menu" style="position: absolute; top: 100%; left: 0; display: none;">
+        <div class="action-item">
+          <button type="submit" form="key-form" onclick="return confirmDelete()">Excluir chaves</button>
+        </div>
+        <div class="action-item">
+          <button type="button" onclick="copySelectedKeys()">Copiar chaves</button>
+        </div>
+        <div class="action-item has-submenu" onmouseenter="showRenewPopup()" onmouseleave="startHideRenewPopup()">
+          <button type="button">Renovar key <span class="submenu-arrow">›</span></button>
+          <!-- Popup de Renovação (submenu) -->
+          <div id="renew-popup" class="popup-menu renew-popup" onmouseenter="clearHideRenewPopup()" onmouseleave="hideRenewPopup()" style="display: none; position: absolute; top: 0; left: 100%; background: #fff; border: 1px solid #ccc; box-shadow: 0 2px 8px rgba(0,0,0,0.1); padding: 8px; z-index: 1001;">
+            <p style="margin-bottom: 8px;">Renovar por:</p>
+            <button type="button" onclick="confirmRenew('1h')">1 hora</button>
+            <button type="button" onclick="confirmRenew('1d')">1 dia</button>
+            <button type="button" onclick="confirmRenew('7d')">7 dias</button>
+            <button type="button" onclick="confirmRenew('15d')">15 dias</button>
+            <button type="button" onclick="confirmRenew('30d')">30 dias</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <!-- Tabela de chaves -->
+  <form method="post" action="/delete_keys" id="key-form">
+    <table class="table-box">
+      <tr>
+        <th><input type="checkbox" onclick="toggleAll(this)"></th>
+        <th>Chave</th>
+        <th>Jogo</th>
+        <th>Dispositivo</th>
+        <th>ID Android</th>
+        <th>ID iPhone</th>
+        <th>Criada em</th>
+        <th>Expira em</th>
+        <th>Status</th>
+      </tr>
+      {% if keys %}
+        {% for key, info in keys.items() %}
+        <tr>
+          <td><input type="checkbox" name="selected_keys" value="{{ key }}" onchange="updateDeleteBar()"></td>
+          <td>
+            <div class="key-cell">
+              <span id="key-{{ loop.index }}">{{ key }}</span>
+              <i class="fas fa-copy copy-icon" onclick="copyToClipboard('key-{{ loop.index }}')"></i>
+            </div>
+          </td>
+          <td>{{ info.game }}</td>
+          <td>{{ info.device | capitalize }}</td>
+          <td>
+            {% if info.device == 'android' %}
+              {% if info.android_id %}
+                {{ info.android_id }}
+              {% else %}
+                <span style="background: #fff3cd; color: #856404; padding: 4px 8px; border-radius: 4px; font-weight: bold;">
+                  Não acessado
+                </span>
+              {% endif %}
+            {% else %}
+              -
+            {% endif %}
+          </td>          
+          <td>
+            {% if info.device == 'iphone' %}
+              {% if info.iphone_id %}
+                {{ info.iphone_id }}
+              {% else %}
+                <span style="background: #fff3cd; color: #856404; padding: 4px 8px; border-radius: 4px; font-weight: bold;">
+                  Não acessado
+                </span>
+              {% endif %}
+            {% else %}
+              -
+            {% endif %}
+          </td>          
+          <td>{{ info.created_at | datetimeformat }}</td>
+          <td>
+            {% if info.expires_at == 'pending' %}
+              <span style="background: #fff3cd; color: #856404; padding: 4px 8px; border-radius: 4px; font-weight: bold;">
+                Pendente
+              </span>
+            {% else %}
+              {{ info.expires_at | datetimeformat }}
+            {% endif %}
+          </td>     
+          <td>
+            {% if info.disabled %}
+              <span style="background: #f8d7da; color: #721c24; padding: 4px 8px; border-radius: 4px; font-weight: bold;">
+                Desativada
+              </span>
+            {% elif info.expires_at == 'pending' %}
+              <span style="background: #fff3cd; color: #856404; padding: 4px 8px; border-radius: 4px; font-weight: bold;">
+                Pendente
+              </span>
+            {% else %}
+              <span style="background: #d4edda; color: #155724; padding: 4px 8px; border-radius: 4px; font-weight: bold;">
+                Ativa
+              </span>
+            {% endif %}
+          </td>               
+        </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td colspan="8" style="text-align: center; color: #555; font-style: italic;">
+            Nenhuma chave criada ainda.
+          </td>
+        </tr>
+      {% endif %}
+    </table>
+  </form>
+
+  <div id="copy-status" class="copy-status" style="display:none;">Copiado com sucesso!</div>
+</div>
+
+<script>
+function copyToClipboard(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+
+    const text = el.innerText || el.textContent;
+
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(() => {
+            showCopyStatus();
+        }).catch(() => fallbackCopy(el));
+    } else {
+        fallbackCopy(el);
+    }
+
+    function fallbackCopy(element) {
+        const range = document.createRange();
+        range.selectNode(element);
+        const sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+        try {
+            const success = document.execCommand('copy');
+            if (success) showCopyStatus();
+        } catch (err) {
+            console.error("Erro ao copiar:", err);
+        }
+        sel.removeAllRanges();
+    }
+
+    function showCopyStatus() {
+        const status = document.getElementById("copy-status");
+        status.style.display = "block";
+        setTimeout(() => status.style.display = "none", 2000);
+    }
+}
+
+function updateDeleteBar() {
+    const checkboxes = document.querySelectorAll('input[name="selected_keys"]:checked');
+    const count = checkboxes.length;
+
+    document.getElementById('count').innerText = count > 0 ? `(${count})` : '';
+
+    const bar = document.getElementById("actions-bar");
+    if (count > 0) {
+        bar.style.display = "block";
+    } else {
+        bar.style.display = "none";
+        document.getElementById("actions-popup").style.display = "none";
+    }
+}
+
+function toggleAll(master) {
+    const checkboxes = document.querySelectorAll('input[name="selected_keys"]');
+    checkboxes.forEach(cb => cb.checked = master.checked);
+    updateDeleteBar();
+}
+
+function confirmDelete() {
+    return confirm("Tem certeza que deseja excluir as chaves selecionadas?");
+}
+
+let isPopupOpen = false;
+
+function toggleActionsPopup() {
+    const popup = document.getElementById("actions-popup");
+    if (isPopupOpen) {
+        popup.style.display = "none";
+        isPopupOpen = false;
+        document.removeEventListener('click', closePopupOnClickOutside);
+    } else {
+        popup.style.display = "block";
+        isPopupOpen = true;
+        setTimeout(() => {
+            document.addEventListener('click', closePopupOnClickOutside);
+        }, 0);
+    }
+}
+
+function closePopupOnClickOutside(event) {
+    const popup = document.getElementById("actions-popup");
+    const actionsBar = document.getElementById("actions-bar");
+    if (!popup.contains(event.target) && !actionsBar.contains(event.target)) {
+        popup.style.display = "none";
+        isPopupOpen = false;
+        document.removeEventListener('click', closePopupOnClickOutside);
+    }
+}
+
+let hideTimeout;
+
+function showRenewPopup() {
+    clearTimeout(hideTimeout);
+    document.getElementById("renew-popup").style.display = "block";
+}
+
+function startHideRenewPopup() {
+    hideTimeout = setTimeout(() => {
+        document.getElementById("renew-popup").style.display = "none";
+    }, 200);
+}
+
+function clearHideRenewPopup() {
+    clearTimeout(hideTimeout);
+}
+
+function hideRenewPopup() {
+    document.getElementById("renew-popup").style.display = "none";
+}
+
+function copySelectedKeys() {
+    const selected = document.querySelectorAll('input[name="selected_keys"]:checked');
+    let keys = [];
+    selected.forEach(cb => {
+        const span = cb.closest("tr").querySelector(".key-cell span");
+        if (span) keys.push(span.innerText.trim());
+    });
+
+    if (keys.length === 0) return alert("Nenhuma chave selecionada.");
+    const temp = document.createElement("textarea");
+    temp.value = keys.join("\n");
+    document.body.appendChild(temp);
+    temp.select();
+    document.execCommand("copy");
+    document.body.removeChild(temp);
+    alert("Chaves copiadas!");
+}
+
+function confirmRenew(duration) {
+    const selected = document.querySelectorAll('input[name="selected_keys"]:checked');
+    if (selected.length !== 1) {
+        alert("Selecione exatamente 1 chave para renovar.");
+        return;
+    }
+    const key = selected[0].value;
+
+    if (confirm(`Deseja renovar a chave por ${duration}? Isso consumirá créditos.`)) {
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = "/renew_key";
+
+        const keyInput = document.createElement("input");
+        keyInput.type = "hidden";
+        keyInput.name = "key";
+        keyInput.value = key;
+
+        const durInput = document.createElement("input");
+        durInput.type = "hidden";
+        durInput.name = "duration";
+        durInput.value = duration;
+
+        form.appendChild(keyInput);
+        form.appendChild(durInput);
+        document.body.appendChild(form);
+        form.submit();
+    }
+}
+</script>
+
+<style>
+/* Estilo para indicar submenu */
+.has-submenu > button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 4px;  
+    cursor: pointer;
+}
+
+.submenu-arrow {
+    font-size: 1.2em;
+    margin-left: 8px;
+}
+
+.popup-menu {
+    background: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 8px;
+    z-index: 1000;
+}
+
+.renew-popup {
+    background: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 8px;
+    z-index: 1001;
+}
+
+.action-item + .action-item {
+    margin-top: 4px;
+}
+</style>
+{% endblock %}

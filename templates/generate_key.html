@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="box-title">Gerar Nova Chave</div>
+<div class="box-content">
+    <form method="post" class="retro-form">
+        <div class="retro-field">
+            <label for="duration">Duração:</label>
+            <select name="duration" id="duration" required>
+                <option value="1h">1 hora</option>
+                <option value="7d">7 dias</option>
+                <option value="15d">15 dias</option>
+                <option value="30d">30 dias</option>
+            </select>
+        </div>
+
+        <div class="retro-field">
+            <label for="game">Jogo:</label>
+            <select name="game" id="game-selector" onchange="updateDevices()" required>
+                <option value="">Selecione o jogo</option>
+                {% for game in games %}
+                    <option value="{{ game }}">{{ game }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="retro-field">
+            <label for="device">Dispositivo:</label>
+            <select name="device" id="device-selector" required>
+                <option value="">Selecione o jogo primeiro</option>
+            </select>
+        </div>
+
+        <div class="retro-field">
+            <label for="amount">Quantidade:</label>
+            <select name="amount" id="amount-selector" required>
+                <option value="1" selected>1</option>
+                <option value="5">5</option>
+                <option value="10">10</option>
+            </select>
+        </div>
+
+        {% if error %}
+        <div class="retro-error" style="margin-top: 15px; color: #b60000; background: #ffe0e0; border: 1px solid #ffb3b3; padding: 10px; border-radius: 5px; margin-bottom: 15px;">
+            {{ error }}
+        </div>
+        {% endif %}
+
+        {% if success %}
+        <div class="retro-success" id="generated-keys-container" style="position: relative; padding-right: 30px;">
+            <span onclick="copyGeneratedKeysOnly()" title="Copiar todas" style="
+                position: absolute;
+                top: 50%;
+                right: 10px;
+                transform: translateY(-50%);
+                cursor: pointer;
+                color: #0057b8;
+                font-size: 16px;
+            ">
+                <i class="fas fa-copy"></i>
+            </span>
+            <div id="generated-keys">
+                {{ success | safe }}
+            </div>
+        </div>
+        {% endif %}
+
+        <div style="text-align: right;">
+            <input type="submit" value="Gerar Chave">
+        </div>
+    </form>
+</div>
+
+<script>
+    const gamesData = {{ games_data|tojson }};
+    
+    function updateDevices() {
+        const game = document.getElementById("game-selector").value;
+        const deviceSelector = document.getElementById("device-selector");
+        deviceSelector.innerHTML = "";
+    
+        if (game && gamesData[game]) {
+            const devices = gamesData[game].devices;
+            devices.forEach(device => {
+                const option = document.createElement("option");
+                option.value = device;
+                option.textContent = device.charAt(0).toUpperCase() + device.slice(1);
+                deviceSelector.appendChild(option);
+            });
+        } else {
+            const opt = document.createElement("option");
+            opt.value = "";
+            opt.textContent = "Selecione o jogo primeiro";
+            deviceSelector.appendChild(opt);
+        }
+    }
+    function copyGeneratedKeysOnly() {
+    const container = document.getElementById("generated-keys-container");
+    const keysDiv = document.getElementById("generated-keys");
+    if (!keysDiv || !container) return;
+
+    // Pega apenas as chaves (sem "Chaves geradas:")
+    const lines = keysDiv.innerText
+        .split('\n')
+        .filter(line => line.trim() && !line.toLowerCase().includes('chave'))
+        .join('\n');
+
+    const temp = document.createElement("textarea");
+    temp.value = lines;
+    document.body.appendChild(temp);
+    temp.select();
+    document.execCommand("copy");
+    document.body.removeChild(temp);
+
+    // Esconde o container
+    container.style.display = "none";
+
+    // Feedback opcional
+    alert("Chaves copiadas!");
+}
+    </script>
+{% endblock %}
